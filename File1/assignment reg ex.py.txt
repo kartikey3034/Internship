@@ -1,0 +1,639 @@
+﻿#!/usr/bin/env python
+# coding: utf-8
+
+# # solution 1
+
+# In[ ]:
+
+
+import re
+
+def replace_characters(text):
+  pattern = r'[ ,.]'
+  return re.sub(pattern, ':', text)
+text = 'Python Exercises, PHP exercises.'
+replaced_text = replace_characters(text)
+print(replaced_text)
+
+
+# # solution 2
+
+# In[ ]:
+
+
+import pandas as pd
+import re
+def clean_text(text):
+  pattern = r'[^a-zA-Z\s]'
+  return re.sub(pattern, '', text)
+data = {'SUMMARY': ['hello, world!', 'XXXXX test', '123four, five:; six...']}
+df = pd.DataFrame(data)
+df['SUMMARY'] = df['SUMMARY'].apply(clean_text)
+print(df)
+
+
+# # solution 3
+
+# In[ ]:
+
+
+import re
+
+def find_long_words(text):
+ 
+  pattern = re.compile(r'\b\w{4,}\b')
+  long_words = pattern.findall(text)
+  return long_words
+text = "This is an intern boy try to solve some assignment."
+long_words = find_long_words(text)
+print(long_words)
+
+
+# # solution 4
+
+# In[ ]:
+
+
+import re
+def find_words_by_length(text, min_length=3, max_length=5):
+  pattern = re.compile(r'\b\w{' + str(min_length) + ',' + str(max_length) + r'}\b')
+  words = pattern.findall(text)
+  return words
+text = "This is a sample text to find words of different lengths."
+three_four_five_words = find_words_by_length(text, 3, 5)
+print(three_four_five_words)
+
+
+# # solution 5
+
+# In[ ]:
+
+
+import re
+def remove_parentheses(strings):
+    pattern = re.compile(r'\([^()]*\)')
+    cleaned_strings = [pattern.sub('', string) for string in strings]
+    return cleaned_strings
+strings = ["example (.com)", "hr@fliprobo (.com)", "github (.com)", "Hello (Data Science World)", "Data (Scientist)"]
+cleaned_strings = remove_parentheses(strings)
+print(cleaned_strings)
+
+
+# # solution 6
+
+# In[ ]:
+
+
+with open('sample.txt', 'w') as file:
+    file.write('["example (.com)", "hr@fliprobo (.com)", "github (.com)", "Hello (Data Science World)", "Data (Scientist)"]')
+
+
+# In[ ]:
+
+
+import re
+
+def remove_parentheses(text):
+    # Regular expression pattern to match text within parentheses, including the parentheses
+    pattern = re.compile(r'\s*\(.*?\)')
+    
+    # Replace matches with an empty string
+    cleaned_text = pattern.sub('', text)
+    
+    # Clean up any extra spaces that may be left behind
+    cleaned_text = re.sub(r'\s+', ' ', cleaned_text).strip()
+    
+    return cleaned_text
+
+# Path to the file
+file_path = 'sample.txt'
+
+# Read the content of the file
+with open(file_path, 'r') as file:
+    content = file.read()
+
+# Remove the parenthesis area
+cleaned_content = remove_parentheses(content)
+
+# Print the cleaned content
+print("Cleaned text:", cleaned_content)
+
+# Optionally, save the cleaned content to a new file
+with open('cleaned_text.txt', 'w') as file:
+    file.write(cleaned_content)
+
+
+# # solution 7
+
+# In[ ]:
+
+
+import re
+
+def split_into_uppercase(text):
+
+  pattern = r'[A-Z]'
+  uppercase_letters = re.findall(pattern, text)
+  return uppercase_letters
+
+text = "ImportanceOfRegularExpressionsInPython"
+
+
+uppercase_letters = split_into_uppercase(text)
+print(uppercase_letters)
+
+
+# # solution 8
+
+# In[ ]:
+
+
+import re
+
+def insert_spaces(text):
+ 
+  pattern = r'(\d)(\w+)'
+  return re.sub(pattern, r'\1 \2', text)
+
+text = "RegularExpression1IsAn2ImportantTopic3InPython"
+
+spaced_text = insert_spaces(text)
+print(spaced_text)
+
+
+# # solution 9
+
+# In[ ]:
+
+
+import re
+
+def insert_spaces(text):
+ 
+
+  pattern = r'(\d|\b[A-Z])(\w+)'
+  return re.sub(pattern, r'\1 \2', text)
+
+text = "RegularExpression1IsAn2ImportantTopic3InPython"
+
+spaced_text = insert_spaces(text)
+print(spaced_text)
+
+
+# # solution 10
+
+# In[ ]:
+
+
+import pandas as pd
+
+# URL of the CSV file
+url = "https://raw.githubusercontent.com/dsrscientist/DSData/master/happiness_score_dataset.csv"
+
+# Read the data into a DataFrame
+df = pd.read_csv(url)
+
+# Extract the first 6 letters of each country and add a new column
+df["first_five_letters"] = df["Country"].str[:6]
+
+# Print the first few rows of the DataFrame
+print(df.head())
+
+
+# # solution 11
+
+# In[31]:
+
+
+import re
+
+def is_valid_string(string):
+  
+  pattern = r'^[a-zA-Z0-9_]+$'
+  return re.match(pattern, string) is not None
+
+# Sample strings
+valid_string = "HelloFlipandwork123_"
+invalid_string = "Hello, FLIPANDWORK!"
+
+# Check if the strings are valid
+print(is_valid_string(valid_string))
+print(is_valid_string(invalid_string))
+
+
+# # solution 12
+
+# In[32]:
+
+
+import re
+
+def starts_with_number(string, number):
+  
+  pattern = r'^{number}\w+'.format(number=number)
+  return re.match(pattern, string) is not None
+
+# Sample strings
+string1 = "987654kartikey"
+string2 = "fLIP987654"
+
+# Check if the strings start with the number 
+print(starts_with_number(string1, 987654))
+print(starts_with_number(string2, 987654))
+
+
+# # solution 13
+
+# In[36]:
+
+
+import re
+
+def remove_leading_zeros(ip_address):
+
+  pattern = r'\b0+(\d+)\b'
+  return re.sub(pattern, r'\1', ip_address)
+
+ip_address = "192.000.001.002"
+
+cleaned_ip = remove_leading_zeros(ip_address)
+print(cleaned_ip)
+
+
+# # solution 14
+
+# In[37]:
+
+
+# Save this as save_text_to_file.py
+with open('sample_text.txt', 'w') as file:
+    file.write('On August 15th 1947 that India was declared independent from British colonialism, and the reins of control were handed over to the leaders of the Country.')
+import re
+
+def extract_date(text):
+    # Regular expression pattern to match dates in the format: Month Day Year
+    pattern = re.compile(r'\b(?:January|February|March|April|May|June|July|August|September|October|November|December) \d{1,2}(?:th|st|nd|rd)? \d{4}\b')
+    
+    # Find all matches in the text
+    dates = pattern.findall(text)
+    
+    return dates
+
+# Path to the file
+file_path = 'sample_text.txt'
+
+# Read the content of the file
+with open(file_path, 'r') as file:
+    content = file.read()
+
+# Extract dates
+dates = extract_date(content)
+print("Extracted dates:", dates)
+
+
+# # solution 15
+
+# In[40]:
+
+
+import re
+def find_literals(text, literals):
+ 
+  pattern = r'\b(' + '|'.join(literals) + r')\b'
+  found_literals = re.findall(pattern, text)
+  return found_literals
+
+text = "The quick brown fox jumps over the lazy dog."
+literals = ["fox", "dog", "horse"]
+
+found_literals = find_literals(text, literals)
+print(found_literals)
+
+
+# # solution 16
+
+# In[41]:
+
+
+import re
+
+def find_literal_and_position(text, literal):
+
+  match = re.search(literal, text)
+  if match:
+    return literal, match.start()
+  else:
+    return None
+
+text = "The quick brown fox jumps over the lazy dog."
+literal = "fox"
+
+result = find_literal_and_position(text, literal)
+
+if result:
+  print("Found '{}' at index {}".format(result[0], result[1]))
+else:
+  print("Literal not found in the text.")
+
+
+# # solution 17
+
+# In[43]:
+
+
+import re
+
+def find_substrings(text, pattern):
+ 
+
+  matches = re.findall(pattern, text)
+  positions = [m.start() for m in re.finditer(pattern, text)]
+  return list(zip(matches, positions))
+
+text = "Python exercises, PHP exercises, C# exercises"
+pattern = "exercises"
+
+substrings = find_substrings(text, pattern)
+print(substrings)
+
+
+# # solution 18
+
+# In[45]:
+
+
+import re
+
+def find_substrings(text, pattern):
+ 
+
+  matches = re.findall(pattern, text)
+  positions = [m.start() for m in re.finditer(pattern, text)]
+  return list(zip(matches, positions))
+
+# Sample text and pattern
+text = "Python exercises, PHP exercises, C# exercises"
+pattern = "exercises"
+
+# Find substrings and print the result
+substrings = find_substrings(text, pattern)
+print(substrings)
+
+
+# # solution 19
+
+# In[46]:
+
+
+import datetime
+
+def convert_date_format(date_str):
+
+  date_obj = datetime.datetime.strptime(date_str, "%Y-%m-%d")
+  new_date_str = date_obj.strftime("%d-%m-%Y")
+  return new_date_str
+
+date_str = "2023-08-23"
+
+new_date_str = convert_date_format(date_str)
+print(new_date_str)
+
+
+# # solution 20
+
+# In[47]:
+
+
+import re
+
+def find_decimal_numbers(text):
+ 
+  pattern = re.compile(r'\b\d+\.\d{1,2}\b')
+  decimal_numbers = pattern.findall(text)
+  return decimal_numbers
+
+text = "01.12 0132.123 2.31875 145.8 3.01 27.25 0.25"
+
+decimal_numbers = find_decimal_numbers(text)
+print(decimal_numbers)
+
+
+# # solution 21
+
+# In[48]:
+
+
+import re
+
+def separate_numbers_and_positions(text):
+
+  pattern = r'\d+'
+  matches = re.findall(pattern, text)
+  positions = [m.start() for m in re.finditer(pattern, text)]
+  return list(zip(matches, positions))
+
+text = "The quick brown 123 fox jumps over the lazy 456 dog."
+
+numbers_and_positions = separate_numbers_and_positions(text)
+print(numbers_and_positions)
+
+
+# # solution 22
+
+# In[49]:
+
+
+import re
+
+def extract_max_numeric(text):
+
+
+  pattern = r'\d+'
+  numbers = re.findall(pattern, text)
+
+  if numbers:
+    max_number = max(map(int, numbers))
+    return max_number
+  else:
+    return None
+text = 'My marks in each semester are: 947, 896, 926, 524, 734, 950, 642'
+
+max_value = extract_max_numeric(text)
+
+if max_value is not None:
+  print("The maximum numeric value is:", max_value)
+else:
+  print("No numeric values found in the text.")
+
+
+# # Solution 23
+
+# In[50]:
+
+
+import re
+
+def insert_spaces(text):
+
+  pattern = r'([A-Z])([A-Z]+|[a-z]+)'
+  return re.sub(pattern, r'\1 \2', text)
+
+text = "RegularExpressionIsAnImportantTopicInPython"
+
+spaced_text = insert_spaces(text)
+print(spaced_text)
+
+
+# # sol 24
+
+# In[51]:
+
+
+import re
+
+def find_sequences(text):
+
+  pattern = r'[A-Z][a-z]+'
+  sequences = re.findall(pattern, text)
+  return sequences
+
+text = "Hello World, this is a sample text."
+
+found_sequences = find_sequences(text)
+print(found_sequences)
+
+
+# # sol 25
+
+# In[53]:
+
+
+import re
+
+def remove_duplicate_words(text):
+
+
+  pattern = r'(\b\w+\b)\s+\1'
+  return re.sub(pattern, r'\1', text)
+
+text = "Hello hello world world"
+
+cleaned_text = remove_duplicate_words(text)
+print(cleaned_text)
+
+
+# # sol 26
+
+# In[54]:
+
+
+import re
+
+def ends_with_alphanumeric(string):
+
+
+  pattern = r'[a-zA-Z0-9]$'
+  return re.search(pattern, string) is not None
+
+# Sample strings
+string1 = "kartik123"
+string2 = "kartik!"
+
+# Check if the strings end with alphanumeric characters
+print(ends_with_alphanumeric(string1))
+print(ends_with_alphanumeric(string2))
+
+
+# # solution 27
+
+# In[55]:
+
+
+import re
+
+def extract_hashtags(text):
+
+
+  pattern = r'#\w+'
+  hashtags = re.findall(pattern, text)
+  return hashtags
+
+text = """RT @kapil_kausik:
+#Doltiwal I mean #xyzabc is "hurt" by #Demonetization as the same has
+rendered USELESS
+<ed><U+00A0><U+00BD><ed><U+00B1><U+0089>
+"acquired funds" No """
+
+# Extract hashtags and print the result
+extracted_hashtags = extract_hashtags(text)
+print(extracted_hashtags)
+
+
+# # solution 28
+
+# In[56]:
+
+
+import re
+
+def remove_unicode_symbols(text):
+
+  pattern = r'<U+\d{4}>'
+  return re.sub(pattern, '', text)
+
+# Sample text with Unicode symbols
+text = "@Jags123456 Bharat band on 28??<ed><U+00A0><U+00BD><ed><U+00B8><U+0082>Those who  are protesting #demonetization  are all different party leaders"
+
+# Remove Unicode symbols and print the result
+cleaned_text = remove_unicode_symbols(text)
+print(cleaned_text)
+
+
+# # solution 29
+
+# In[58]:
+
+
+import re
+
+def extract_dates(text):
+
+
+  date_pattern = r'\d{2}-\d{2}-\d{4}'
+  dates = re.findall(date_pattern, text)
+  return dates
+
+with open('sample_text.txt', 'w') as file:
+  file.write("Ron was born on 12-09-1992 and he was admitted to school 15-12-1999.")
+
+with open('sample_text.txt', 'r') as file:
+  text = file.read()
+  extracted_dates = extract_dates(text)
+
+print("Extracted dates:", extracted_dates)
+
+
+# # solution 30
+
+# In[59]:
+
+
+import re
+
+def remove_short_words(text):
+ 
+  pattern = re.compile(r'\b\w{2,4}\b')
+  return re.sub(pattern, '', text)
+
+text = "The following example creates an ArrayList with a capacity of 50 elements. 4 elements are then added to the ArrayList and the ArrayList is trimmed accordingly."
+
+cleaned_text = remove_short_words(text)
+print(cleaned_text)
+
+
+# In[ ]:
+
+
+
+
+
